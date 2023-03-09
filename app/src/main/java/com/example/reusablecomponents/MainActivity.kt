@@ -25,13 +25,17 @@ class MainActivity : AppCompatActivity() {
             addItemDecoration(CirclePagerIndicatorDecoration
                 (R.color.black,
                 R.color.teal_200,
-                CirclePagerIndicatorDecoration.DecorationPosition.UpperMiddle)
+                CirclePagerIndicatorDecoration.DecorationPosition.BottomMiddle,
+                CirclePagerIndicatorDecoration.DecorationSize.Large
+            )
             )
         }
     }
 
     private fun createHeroList(): ArrayList<String> {
-        return arrayListOf("Ajay Devgan","Chris Hemsworth","Daniel Craig","Dwayne Johnson","Tom Hiddlestone", "Tony Stark")
+        return arrayListOf("Daniel Craig","Dwayne Johnson","Tom Hiddlestone", "Tony Stark","Daniel Craig","Dwayne Johnson","Tom Hiddlestone", "Tony Stark","Daniel Craig","Daniel Craig")
+       //return arrayListOf("Daniel Craig","Dwayne Johnson","Tom Hiddlestone")
+
     }
 
 }

@@ -9,7 +9,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.math.max
 
 /**
  * This class is using recycle view item decoration to show indicator in the upper right of the view
@@ -17,7 +16,8 @@ import kotlin.math.max
 class CirclePagerIndicatorDecoration(
     private val activeColorHex: Int,
     private val inactiveColorHex: Int,
-    private val position: DecorationPosition
+    private val position: DecorationPosition = DecorationPosition.UpperRight,
+    private val size: DecorationSize = DecorationSize.Small
 ) : RecyclerView.ItemDecoration() {
 
     private val dp = Resources.getSystem().displayMetrics.density
@@ -35,12 +35,7 @@ class CirclePagerIndicatorDecoration(
     /**
      * Indicator width.
      */
-    private val mIndicatorItemLength = dp * 18
-
-    /**
-     * Padding between indicators.
-     */
-    private val mIndicatorItemPadding = dp * 6
+    private var mIndicatorItemLength = dp * 25
 
     /**
      * Some more natural animation interpolation
@@ -68,16 +63,17 @@ class CirclePagerIndicatorDecoration(
         parentWidth: Int,
         parentHeight: Int
     ) {
-        val totalLength = mIndicatorItemLength * itemCount
-        val paddingBetweenItems = max(0, itemCount - 1) * mIndicatorItemPadding
-        val indicatorTotalWidth = totalLength + paddingBetweenItems
+        convertEnumToSize(size)
+        val totalLength = (mIndicatorItemLength) * itemCount/6
+        val paddingBetweenItems = ((itemCount)*mIndicatorItemLength*.5f)+(mIndicatorItemLength*.4f)
+        val indicatorTotalWidth = totalLength + paddingBetweenItems + ((mIndicatorItemLength)/itemCount)
         when (position) {
             DecorationPosition.BottomRight -> {
-                indicatorStartX = parentWidth - .9f * indicatorTotalWidth
+                indicatorStartX = parentWidth - indicatorTotalWidth
                 indicatorPosY = parentHeight - .3 * mIndicatorHeight
             }
             DecorationPosition.BottomMiddle -> {
-                indicatorStartX = (parentWidth / 2 - indicatorTotalWidth / 2.5).toFloat()
+                indicatorStartX = ((parentWidth / 2 - indicatorTotalWidth /2))
                 indicatorPosY = parentHeight - .3 * mIndicatorHeight
             }
             DecorationPosition.BottomLeft -> {
@@ -89,13 +85,22 @@ class CirclePagerIndicatorDecoration(
                 indicatorPosY = .3 * mIndicatorHeight
             }
             DecorationPosition.UpperMiddle -> {
-                indicatorStartX = (parentWidth / 2 - indicatorTotalWidth / 2.5).toFloat()
+                indicatorStartX = (parentWidth / 2 - indicatorTotalWidth / 2)
                 indicatorPosY = .3 * mIndicatorHeight
             }
             DecorationPosition.UpperRight -> {
-                indicatorStartX = parentWidth - .9f * indicatorTotalWidth
-                indicatorPosY = .3 * mIndicatorHeight
+                indicatorStartX = parentWidth - indicatorTotalWidth
+                indicatorPosY = .5 * mIndicatorHeight
             }
+        }
+    }
+
+
+    private fun convertEnumToSize(size: DecorationSize) {
+         when (size) {
+            DecorationSize.Small -> mIndicatorItemLength = 25 * dp
+            DecorationSize.Medium ->mIndicatorItemLength = 29 * dp
+            DecorationSize.Large -> mIndicatorItemLength = 33 * dp
         }
     }
 
@@ -147,11 +152,11 @@ class CirclePagerIndicatorDecoration(
         mPaint.color = inactiveColorHex
 
         // width of item indicator including padding
-        val itemWidth = mIndicatorItemLength + mIndicatorItemPadding
+        val itemWidth = mIndicatorItemLength
         var start = indicatorStartX
         for (i in 0 until itemCount) {
             c.drawCircle(start + mIndicatorItemLength, indicatorPosY, itemWidth / 6, mPaint)
-            start += itemWidth / 1.5F
+            start += itemWidth / 1.7F
         }
     }
 
@@ -165,20 +170,15 @@ class CirclePagerIndicatorDecoration(
         mPaint.color = activeColorHex
 
         // width of item indicator including padding
-        val itemWidth = mIndicatorItemLength + mIndicatorItemPadding
-        val highlightStart = indicatorStartX + (itemWidth / 1.5F * highlightPosition)
+        val itemWidth = mIndicatorItemLength
+        val highlightStart = indicatorStartX + (itemWidth / 1.7F * highlightPosition)
         if (progress == 0f) {
             // no swipe, draw a normal indicator
             c.drawCircle(highlightStart, indicatorPosY, itemWidth / 6, mPaint)
         } else {
             // calculate partial highlight
             mIndicatorItemLength * progress
-            c.drawCircle(
-                highlightStart + mIndicatorItemLength,
-                indicatorPosY,
-                itemWidth / 6,
-                mPaint
-            )
+            c.drawCircle(highlightStart + mIndicatorItemLength, indicatorPosY, itemWidth / 6, mPaint)
         }
     }
 
@@ -186,8 +186,8 @@ class CirclePagerIndicatorDecoration(
         outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        outRect.bottom = mIndicatorHeight
-        outRect.top = mIndicatorHeight
+        outRect.bottom = (mIndicatorHeight*1.5).toInt()
+        outRect.top = (mIndicatorHeight*1.5).toInt()
     }
 
     enum class DecorationPosition {
@@ -197,6 +197,12 @@ class CirclePagerIndicatorDecoration(
         BottomRight,
         BottomMiddle,
         BottomLeft
+    }
+
+    enum class DecorationSize {
+        Small,
+        Medium,
+        Large,
     }
 }
 
