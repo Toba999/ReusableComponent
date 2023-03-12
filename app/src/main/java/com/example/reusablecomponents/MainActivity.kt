@@ -2,9 +2,13 @@ package com.example.reusablecomponents
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.encryptionHelper.DataStoreEncryptor
 import com.example.recycleViewDecoration.CirclePagerIndicatorDecoration
 import com.example.reusablecomponents.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +20,25 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         setupRecyclerView()
+
+        val dataStoreEncryptor = DataStoreEncryptor(this)
+
+        val nameKey = stringPreferencesKey("name_key")
+
+
+        // launch a coroutine to encrypt and save data
+        lifecycleScope.launch {
+            val valueToSave = "Hello World"
+            dataStoreEncryptor.encryptAndSaveData(nameKey, valueToSave)
+        }
+
+        // launch a coroutine to decrypt and read data
+        lifecycleScope.launch {
+            val retrievedValue = dataStoreEncryptor.decryptAndReadData(nameKey)
+            println(retrievedValue) // Output: Hello World
+        }
+
+
     }
 
     private fun setupRecyclerView() {
