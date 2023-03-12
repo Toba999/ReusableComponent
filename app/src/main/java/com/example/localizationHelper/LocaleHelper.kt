@@ -1,16 +1,15 @@
 package com.example.localizationHelper
 
-import android.app.Activity
-import android.content.res.Configuration
-import android.content.res.Resources
 import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
-import java.text.NumberFormat
 import java.util.*
 
 
 object LocaleHelper {
 
+    fun setLocale(lang: String?) {
+        val myLocale = Locale(lang)
+        Locale.setDefault(myLocale)
+    }
     fun localizeNumber(
         number: Number,
         minimumFractionDigits: Int = 0,

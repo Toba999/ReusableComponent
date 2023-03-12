@@ -1,16 +1,10 @@
 package com.example.reusablecomponents
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.MyApp
-import com.example.localizationHelper.LanguageCodes
-import com.example.localizationHelper.LocaleHelper
 import com.example.recycleViewDecoration.CirclePagerIndicatorDecoration
 import com.example.reusablecomponents.databinding.ActivityMainBinding
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,9 +16,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         setupRecyclerView()
-        var locale = Locale.getDefault()
-        Log.d("MyApp", "Current Locale: ${locale.language}_${locale.country}")
-        Log.d("MyApp", "Current Locale: ${LocaleHelper.localizeNumber(123.44)}")
     }
 
     private fun setupRecyclerView() {
