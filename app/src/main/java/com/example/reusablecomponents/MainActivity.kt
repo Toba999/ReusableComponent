@@ -6,13 +6,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.encryptionHelper.DataStoreEncryptor
 import com.example.recycleViewDecoration.CirclePagerIndicatorDecoration
 import com.example.reusablecomponents.databinding.ActivityMainBinding
-import com.google.gson.Gson
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,25 +22,52 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         //setupRecyclerView()
 
+        // Create an instance of DataStoreEncryptor
         val dataStoreEncryptor = DataStoreEncryptor(this)
-        val user = User("Alice", 25)
-        val nameKey = stringPreferencesKey("name_key")
+
+        // Encrypt and save a string value with key "my_string_key"
+        dataStoreEncryptor.encryptAndSavePrimitiveData("my_string_key", "Hello, world!")
+
+        // Encrypt and save an integer value with key "my_int_key"
+        dataStoreEncryptor.encryptAndSavePrimitiveData("my_int_key", 42)
+
+        // Encrypt and save a boolean value with key "my_bool_key"
+        dataStoreEncryptor.encryptAndSavePrimitiveData("my_bool_key", true)
+
+        // Encrypt and save a float value with key "my_float_key"
+        dataStoreEncryptor.encryptAndSavePrimitiveData("my_float_key", 3.14f)
+
+        // Decrypt and read the string value with key "my_string_key"
+        val myString = dataStoreEncryptor.decryptAndReadPrimitiveData<String>("my_string_key")
+        Log.d("MainActivity", "myString: $myString") // Output: "myString: Hello, world!"
+
+        // Decrypt and read the integer value with key "my_int_key"
+        val myInt = dataStoreEncryptor.decryptAndReadPrimitiveData<Int>("my_int_key")
+        Log.d("MainActivity", "myInt: $myInt") // Output: "myInt: 42"
+
+        // Decrypt and read the boolean value with key "my_bool_key"
+        val myBool = dataStoreEncryptor.decryptAndReadPrimitiveData<Boolean>("my_bool_key")
+        Log.d("MainActivity", "myBool: $myBool") // Output: "myBool: true"
+
+        // Decrypt and read the float value with key "my_float_key"
+        val myFloat = dataStoreEncryptor.decryptAndReadPrimitiveData<Float>("my_float_key")
+        Log.d("MainActivity", "myFloat: $myFloat") // Output: "myFloat: 3.14"
+
+        val nameKey = stringPreferencesKey("nameee_key")
+        val user = User("Alice", 30)
+        //dataStoreEncryptor.encryptAndSaveObject(nameKey, user)
+
+        // Decrypt and read the User object with key "user_data"
+        val decryptedUser = dataStoreEncryptor.decryptAndReadObject<User>(nameKey)
+        Log.d("MainActivity", "decryptedUser: $decryptedUser")
 
         binding.buttonSave.setOnClickListener {
-            val value = binding.editText.text.toString()
-            lifecycleScope.launch {
-                dataStoreEncryptor.encryptAndSaveData(nameKey,value)
-            }
             Toast.makeText(this, "Value saved successfully!", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnLoad.setOnClickListener {
-            lifecycleScope.launch {
-                val retrievedValue = dataStoreEncryptor.decryptAndReadData(nameKey)
-                Toast.makeText(this@MainActivity, "Value loaded: $retrievedValue", Toast.LENGTH_SHORT).show()
-                binding.textView.text = retrievedValue
-                println(retrievedValue) // Output: Hello World
-            }
+            Toast.makeText(this@MainActivity, "Value loaded: $", Toast.LENGTH_SHORT).show()
+
         }
     }
 
