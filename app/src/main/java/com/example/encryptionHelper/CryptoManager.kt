@@ -16,21 +16,25 @@ class CryptoManager {
         load(null)
     }
 
+    // Returns an encryption cipher with a SecretKey
     private val encryptCipher get() = Cipher.getInstance(TRANSFORMATION).apply {
         init(Cipher.ENCRYPT_MODE, getKey())
     }
 
+    // Returns a decryption cipher with a SecretKey and an initialization vector
     private fun getDecryptCipherForIv(iv: ByteArray): Cipher {
         return Cipher.getInstance(TRANSFORMATION).apply {
             init(Cipher.DECRYPT_MODE, getKey(), IvParameterSpec(iv))
         }
     }
 
+    // Returns a SecretKey, either by retrieving an existing one or creating a new one
     private fun getKey(): SecretKey {
         val existingKey = keyStore.getEntry("secret", null) as? KeyStore.SecretKeyEntry
         return existingKey?.secretKey ?: createKey()
     }
 
+    // Creates a new SecretKey and returns it
     private fun createKey(): SecretKey {
         return KeyGenerator.getInstance(ALGORITHM).apply {
             init(
@@ -46,7 +50,10 @@ class CryptoManager {
             )
         }.generateKey()
     }
-
+   /**
+    * Encrypts the given byte array using the encryption cipher, writes the initialization vector
+    * and encrypted bytes to the output stream, and returns the encrypted bytes
+    */
     fun encrypt(bytes: ByteArray, outputStream: OutputStream): ByteArray {
         val encryptedBytes = encryptCipher.doFinal(bytes)
         outputStream.use {
@@ -57,7 +64,10 @@ class CryptoManager {
         }
         return encryptedBytes
     }
-
+   /**
+    * Decrypts the byte array read from the input stream, using the initialization vector read from
+    * the stream and the decryption cipher, and returns the decrypted bytes
+    */
     fun decrypt(inputStream: InputStream): ByteArray {
         return inputStream.use {
             val ivSize = it.read()
