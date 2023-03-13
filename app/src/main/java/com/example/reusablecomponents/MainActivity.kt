@@ -7,9 +7,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.encryptionHelper.CryptoManager
 import com.example.encryptionHelper.DataStoreEncryptor
 import com.example.recycleViewDecoration.CirclePagerIndicatorDecoration
 import com.example.reusablecomponents.databinding.ActivityMainBinding
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,12 +65,30 @@ class MainActivity : AppCompatActivity() {
         val decryptedUser = dataStoreEncryptor.decryptAndReadObject<User>(nameKey)
         Log.d("MainActivity", "decryptedUser: $decryptedUser")
 
+        val cryptoManager = CryptoManager()
+
         binding.buttonSave.setOnClickListener {
-            Toast.makeText(this, "Value saved successfully!", Toast.LENGTH_SHORT).show()
+
+            val bytes = binding.editText.text.toString().encodeToByteArray()
+            val file = File(filesDir, "secret.txt")
+            if(!file.exists()) {
+                file.createNewFile()
+            }
+            val fos = FileOutputStream(file)
+
+            val messageToDecrypt = cryptoManager.encrypt(
+                bytes = bytes,
+                outputStream = fos
+            ).decodeToString()
+            Toast.makeText(this, "Value saved successfully : $messageToDecrypt", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnLoad.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Value loaded: $", Toast.LENGTH_SHORT).show()
+            val filedecrypted = File(filesDir, "secret.txt")
+            val messageToEncrypt = cryptoManager.decrypt(
+                inputStream = FileInputStream(filedecrypted)
+            ).decodeToString()
+            Toast.makeText(this@MainActivity, "Value loaded: $messageToEncrypt", Toast.LENGTH_SHORT).show()
 
         }
     }
