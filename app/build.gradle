@@ -47,11 +47,13 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.security:security-crypto:1.1.0-alpha05"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0"
     implementation 'com.google.code.gson:gson:2.9.0'
 
+    implementation "androidx.security:security-crypto:1.1.0-alpha05"
+
     // For Identity Credential APIs
-    implementation "androidx.security:security-identity-credential:1.0.0-alpha02"
+    implementation "androidx.security:security-identity-credential:1.0.0-alpha03"
 
     // For App Authentication APIs
     implementation "androidx.security:security-app-authenticator:1.0.0-alpha02"

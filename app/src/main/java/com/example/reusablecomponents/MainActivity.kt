@@ -1,6 +1,9 @@
 package com.example.reusablecomponents
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.lifecycleScope
@@ -8,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.encryptionHelper.DataStoreEncryptor
 import com.example.recycleViewDecoration.CirclePagerIndicatorDecoration
 import com.example.reusablecomponents.databinding.ActivityMainBinding
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -19,30 +23,36 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        setupRecyclerView()
+        //setupRecyclerView()
 
         val dataStoreEncryptor = DataStoreEncryptor(this)
-
+        val user = User("Alice", 25)
         val nameKey = stringPreferencesKey("name_key")
 
-
-        // launch a coroutine to encrypt and save data
-        lifecycleScope.launch {
-            val valueToSave = "Hello World"
-            dataStoreEncryptor.encryptAndSaveData(nameKey, valueToSave)
+        binding.buttonSave.setOnClickListener {
+            val value = binding.editText.text.toString()
+            lifecycleScope.launch {
+                dataStoreEncryptor.encryptAndSaveData(nameKey,value)
+            }
+            Toast.makeText(this, "Value saved successfully!", Toast.LENGTH_SHORT).show()
         }
 
-        // launch a coroutine to decrypt and read data
-        lifecycleScope.launch {
-            val retrievedValue = dataStoreEncryptor.decryptAndReadData(nameKey)
-            println(retrievedValue) // Output: Hello World
+        binding.btnLoad.setOnClickListener {
+            lifecycleScope.launch {
+                val retrievedValue = dataStoreEncryptor.decryptAndReadData(nameKey)
+                Toast.makeText(this@MainActivity, "Value loaded: $retrievedValue", Toast.LENGTH_SHORT).show()
+                binding.textView.text = retrievedValue
+                println(retrievedValue) // Output: Hello World
+            }
         }
-
-
     }
+
+
+
 
     private fun setupRecyclerView() {
         binding.recyclerview.apply {
+            this.visibility = View.VISIBLE
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = MyAdapter(createHeroList())
             addItemDecoration(CirclePagerIndicatorDecoration
@@ -62,3 +72,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+data class User(val name: String, val age: Int)
