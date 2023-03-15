@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--card dimension    -->
+    <dimen name="gt_card_width">350dp</dimen>
+    <dimen name="gt_card_min_height">50dp</dimen>
+    <dimen name="gt_corner_radius">15dp</dimen>
+
+    <!--linear layout    -->
+    <dimen name="gt_ll_min_height">50dp</dimen>
+
+    <!--imageview    -->
+    <dimen name="gt_imageview_width">25dp</dimen>
+    <dimen name="gt_imageview_height">25dp</dimen>
+    <dimen name="gt_imageview_message_layout_width">20dp</dimen>
+    <dimen name="gt_imageview_message_layout_height">20dp</dimen>
+    <dimen name="gt_imageview_margin_start">10dp</dimen>
+    <dimen name="gt_imageview_margin_end">5dp</dimen>
+
+    <!--relative layout    -->
+    <dimen name="gt_rl_margin_start">10dp</dimen>
+    <dimen name="gt_rl_margin_end">10dp</dimen>
+
+    <!--generic toast title   -->
+    <dimen name="gt_title_text_size">12sp</dimen>
+    <dimen name="gt_title_text_margin_top">5dp</dimen>
+    <dimen name="gt_title_text_margin_end">10dp</dimen>
+
+    <!--generic toast message   -->
+    <dimen name="gt_message_text_size">10sp</dimen>
+    <dimen name="gt_message_text_margin_top">2dp</dimen>
+    <dimen name="gt_message_text_margin_end">10dp</dimen>
+    <dimen name="gt_message_text_margin_bottom">5dp</dimen>
+
+</resources>

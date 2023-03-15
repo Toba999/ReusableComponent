@@ -7,4 +7,33 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <!--card colors    -->
+    <color name="gt_card_default_background_color">#D5E3D4</color>
+    <color name="gt_card_success_background_lite">#D5E3D4</color>
+    <color name="gt_card_error_background_lite">#E3D4D4</color>
+    <color name="gt_card_warning_background_lite">#E2E3D4</color>
+    <color name="gt_card_info_background_lite">#D4DCE3</color>
+    <color name="gt_card_custom_background_lite">#E9E9E9</color>
+    <color name="gt_card_success_background_dark">#173C16</color>
+    <color name="gt_card_error_background_dark">#3C1616</color>
+    <color name="gt_card_warning_background_dark">#3B3C16</color>
+    <color name="gt_card_info_background_dark">#17163C</color>
+    <color name="gt_card_custom_background_dark">#4B4B4B</color>
+
+    <!--gt title colors    -->
+    <color name="gt_title_default_color">#173B16</color>
+    <color name="gt_title_default_color_dark">#FFFFFF</color>
+    <color name="gt_title_success_color_lite">#173B16</color>
+    <color name="gt_title_error_color_lite">#3B1616</color>
+    <color name="gt_title_warning_color_lite">#3B3B16</color>
+    <color name="gt_title_info_color_lite">#17163B</color>
+    <color name="gt_title_custom_color_lite">#3B1638</color>
+
+    <!--gt message colors    -->
+    <color name="gt_message_default_color_lite">#666666</color>
+    <color name="gt_message_default_color_dark">#BBBBBB</color>
+
+    <color name="button_background">#CECECE</color>
 </resources>

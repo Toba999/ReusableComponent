@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/genericToast"
+    android:layout_centerInParent="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/genericToastCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/gt_card_min_height"
+        android:theme="@style/Theme.MaterialComponents.Light"
+        app:cardBackgroundColor="@color/gt_card_default_background_color"
+        app:cardCornerRadius="@dimen/gt_corner_radius">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="@dimen/gt_ll_min_height"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/genericToastTypeImage"
+                android:layout_width="@dimen/gt_imageview_width"
+                android:layout_height="@dimen/gt_imageview_height"
+                android:layout_gravity="center"
+                android:contentDescription="@string/genericToastTypeImage"
+                android:layout_marginStart="@dimen/gt_imageview_margin_start"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/gt_rl_margin_end"
+                android:layout_marginStart="@dimen/gt_rl_margin_start"
+                >
+
+                <TextView
+                    android:id="@+id/genericToastTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gt_title_text_margin_top"
+                    android:maxLines="1"
+                    android:text="@string/genericToastTitle"
+                    android:layout_marginEnd="@dimen/gt_title_text_margin_end"
+                    android:textColor="@color/gt_title_default_color"
+                    android:textSize="@dimen/gt_title_text_size"
+                    />
+
+                <TextView
+                    android:id="@+id/genericToastMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/genericToastTitle"
+                    android:layout_marginBottom="@dimen/gt_message_text_margin_bottom"
+                    android:text="@string/genericToastMessage"
+                    android:layout_marginEnd="@dimen/gt_message_text_margin_end"
+                    android:textColor="@color/gt_message_default_color_lite"
+                    android:textSize="@dimen/gt_message_text_size" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>
