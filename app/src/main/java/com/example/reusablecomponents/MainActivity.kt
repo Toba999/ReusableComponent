@@ -20,16 +20,37 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         //setupRecyclerView()
 
-        binding.buttonSave.setOnClickListener {
+        binding.btnSuccess.setOnClickListener {
             GenericToast.showToast(this, "Success", "Connection established successfully!",
                 GenericToast.LENGTH_SHORT, GenericToast.SUCCESS, GenericToast.LITE,
                 GenericToast.DEFAULT_FONT, GenericToast.DEFAULT_FONT,true)
         }
 
-        binding.btnLoad.setOnClickListener {
-            GenericToast.showToast(context = this, titleData = "Error",
+        binding.btnError.setOnClickListener {
+            GenericToast.showToast(context = this, titleData = "Error","Connection error!",
                 duration = GenericToast.LENGTH_SHORT,type = GenericToast.ERROR,mode =  GenericToast.LITE,
                 titleFont = GenericToast.DEFAULT_FONT, messageFont = GenericToast.DEFAULT_FONT)
+        }
+
+
+        binding.btnInfo.setOnClickListener {
+            GenericToast.showToast(this, "Info", "Connection established successfully!",
+                GenericToast.LENGTH_SHORT, GenericToast.INFO, GenericToast.LITE,
+                GenericToast.DEFAULT_FONT, GenericToast.DEFAULT_FONT,true)
+        }
+
+
+        binding.btnWarning.setOnClickListener {
+            GenericToast.showToast(this, "Warning", "Connection established successfully!",
+                GenericToast.LENGTH_SHORT, GenericToast.WARNING, GenericToast.LITE,
+                GenericToast.DEFAULT_FONT, GenericToast.DEFAULT_FONT,true)
+        }
+
+
+        binding.btnCustom.setOnClickListener {
+            GenericToast.showToast(this, "CUSTOM", "Connection established successfully!",
+                GenericToast.LENGTH_SHORT, GenericToast.CUSTOM, GenericToast.LITE,
+                GenericToast.DEFAULT_FONT, GenericToast.DEFAULT_FONT,true)
         }
     }
 
