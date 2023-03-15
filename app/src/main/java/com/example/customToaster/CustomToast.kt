@@ -12,12 +12,38 @@ import androidx.core.content.res.ResourcesCompat
 import com.example.reusablecomponents.R
 import com.google.android.material.card.MaterialCardView
 
-
+/*
+ This is a Kotlin object called GenericToast, which defines a static method showToast()
+ that creates and displays a custom toast message. The method takes several parameters,
+ including a Context, the title and message strings to display, the duration to show the toast,
+ the type of the toast, the mode (light or dark) of the toast, and the fonts and animation to use.
+ The object also defines several private helper methods to set the font,
+  color, and animation of the toast.
+ */
 object GenericToast {
-
+    /**
+     * This function shows a generic toast message.
+     *
+     * @param context The context in which the toast will be displayed.
+     * @param titleData The title of the toast message.
+     * @param messageData The message to be displayed in the toast.
+     * @param duration The duration for which the toast will be displayed.
+     * @param type The type of the toast (success, error, warning, info).
+     * @param mode The mode of the toast (dark or light).
+     * @param titleFont The font for the title of the toast.
+     * @param messageFont The font for the message of the toast.
+     * @param isAnimated Whether or not to animate the toast type image.
+     */
     fun showToast(
-        context: Context, titleData: String, messageData: String="",
-        duration: Int, type: String, mode: String, titleFont: Int, messageFont: Int, isAnimated : Boolean = false
+        context: Context,
+        titleData: String,
+        messageData: String = "",
+        duration: Int,
+        type: String,
+        mode: String,
+        titleFont: Int,
+        messageFont: Int,
+        isAnimated: Boolean = false
     ) {
         val view: View = LayoutInflater.from(context)
             .inflate(R.layout.generic_toast_layout, null)
@@ -26,8 +52,8 @@ object GenericToast {
         val title = view.findViewById<TextView>(R.id.genericToastTitle)
         val message = view.findViewById<TextView>(R.id.genericToastMessage)
         setFontByCheckingDefault(context, titleFont, messageFont, title, message)
-        if (messageData==""){
-            message.visibility=View.GONE
+        if (messageData == "") {
+            message.visibility = View.GONE
         }
         title.text = titleData
         message.text = messageData
@@ -37,11 +63,17 @@ object GenericToast {
         toast.setView(view)
         toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, YOFFSET)
         toast.show()
-        if (isAnimated){
+        if (isAnimated) {
             startAnimationToastTypeImage(context, genericToastImageType)
         }
     }
 
+    /**
+     * This function starts the animation for the toast type image.
+     *
+     * @param context The context in which the toast will be displayed.
+     * @param genericToastImageType The image to be animated.
+     */
     private fun startAnimationToastTypeImage(
         context: Context,
         genericToastImageType: ImageView
@@ -52,6 +84,15 @@ object GenericToast {
         genericToastImageType.startAnimation(myAnim)
     }
 
+    /**
+     * This function sets the font for the title and message of the toast.
+     *
+     * @param context The context in which the toast will be displayed.
+     * @param titleFont The font for the title of the toast.
+     * @param messageFont The font for the message of the toast.
+     * @param title The title of the toast.
+     * @param message The message to be displayed in the toast.
+     */
     private fun setFontByCheckingDefault(
         context: Context,
         titleFont: Int,
@@ -67,16 +108,41 @@ object GenericToast {
         )
     }
 
+    /**
+     * This function sets the font for the message of the toast.
+     *
+     * @param context The context in which the toast will be displayed.
+     * @param messageFont The font for the message of the toast.
+     * @param message The message to be displayed in the toast.
+     */
     private fun setFontForMessage(context: Context, messageFont: Int, message: TextView) {
         val fontMessage = ResourcesCompat.getFont(context, messageFont)
         message.typeface = fontMessage
     }
 
+    /**
+     * This function sets the font for the title of the toast.
+     *
+     * @param context The context in which the toast will be displayed.
+     * @param titleFont The font for the title of the toast.
+     * @param title The title of the toast.
+     */
     private fun setFontForTitle(context: Context, titleFont: Int, title: TextView) {
         val fontTitle = ResourcesCompat.getFont(context, titleFont)
         title.typeface = fontTitle
     }
 
+    /**
+     * This function sets the color of the toast card, title, and type image based on the toast type and mode.
+     *
+     * @param materialCardView The card on which the toast is displayed.
+     * @param context The context in which the toast will be displayed.
+     * @param colorBackground The background color of the toast card.
+     * @param title The title of the toast.
+     * @param titleColor The color of the title of the toast.
+     * @param genericToastImageType The type image of the toast.
+     * @param imageBackgroundType The background image of the type image.
+     */
     private fun setColorToCard(
         materialCardView: MaterialCardView,
         context: Context,
