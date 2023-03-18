@@ -38,9 +38,9 @@ object GenericToast {
         context: Context,
         titleData: String,
         messageData: String = "",
-        duration: Int,
-        type: String,
-        mode: String,
+        duration: Length,
+        type: Type,
+        mode: Mode,
         titleFont: Int,
         messageFont: Int,
         isAnimated: Boolean = false
@@ -59,9 +59,9 @@ object GenericToast {
         message.text = messageData
         setColorByType(context, type, mode, materialCardView, title, message, genericToastImageType)
         val toast = Toast(context)
-        toast.duration = duration
+        toast.duration = duration.time
         toast.setView(view)
-        toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, YOFFSET)
+        toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 250)
         toast.show()
         if (isAnimated) {
             startAnimationToastTypeImage(context, genericToastImageType)
@@ -160,17 +160,17 @@ object GenericToast {
 
     private fun setColorByType(
         context: Context,
-        type: String,
-        mode: String,
+        type: Type,
+        mode: Mode,
         materialCardView: MaterialCardView,
         title: TextView,
         message: TextView?,
         genericToastImageType: ImageView
     ) {
-        if (mode == DARK) {
+        if (mode == Mode.DARK) {
             message?.setTextColor(context.getColor(R.color.gt_message_default_color_dark))
             when (type) {
-                SUCCESS -> setColorToCard(
+                Type.SUCCESS -> setColorToCard(
                     materialCardView,
                     context,
                     R.color.gt_card_success_background_dark,
@@ -179,7 +179,7 @@ object GenericToast {
                     genericToastImageType,
                     R.drawable.gt_success_image
                 )
-                ERROR -> setColorToCard(
+                Type.ERROR -> setColorToCard(
                     materialCardView,
                     context,
                     R.color.gt_card_error_background_dark,
@@ -188,7 +188,7 @@ object GenericToast {
                     genericToastImageType,
                     R.drawable.gt_error_image
                 )
-                WARNING -> setColorToCard(
+                Type.WARNING -> setColorToCard(
                     materialCardView,
                     context,
                     R.color.gt_card_warning_background_dark,
@@ -197,7 +197,7 @@ object GenericToast {
                     genericToastImageType,
                     R.drawable.gt_warning_image
                 )
-                INFO -> setColorToCard(
+                Type.INFO -> setColorToCard(
                     materialCardView,
                     context,
                     R.color.gt_card_info_background_dark,
@@ -219,7 +219,7 @@ object GenericToast {
         } else {
             message?.setTextColor(context.getColor(R.color.gt_message_default_color_lite))
             when (type) {
-                SUCCESS -> setColorToCard(
+                Type.SUCCESS -> setColorToCard(
                     materialCardView,
                     context,
                     R.color.gt_card_success_background_lite,
@@ -228,7 +228,7 @@ object GenericToast {
                     genericToastImageType,
                     R.drawable.gt_success_image
                 )
-                ERROR -> setColorToCard(
+                Type.ERROR -> setColorToCard(
                     materialCardView,
                     context,
                     R.color.gt_card_error_background_lite,
@@ -237,7 +237,7 @@ object GenericToast {
                     genericToastImageType,
                     R.drawable.gt_error_image
                 )
-                WARNING -> setColorToCard(
+                Type.WARNING -> setColorToCard(
                     materialCardView,
                     context,
                     R.color.gt_card_warning_background_lite,
@@ -246,7 +246,7 @@ object GenericToast {
                     genericToastImageType,
                     R.drawable.gt_warning_image
                 )
-                INFO -> setColorToCard(
+                Type.INFO -> setColorToCard(
                     materialCardView,
                     context,
                     R.color.gt_card_info_background_lite,
@@ -267,17 +267,22 @@ object GenericToast {
             }
         }
     }
-
-    const val SUCCESS = "SUCCESS"
-    const val ERROR = "ERROR"
-    const val WARNING = "WARNING"
-    const val INFO = "INFO"
-    const val CUSTOM = "CUSTOM"
-    const val LITE = "LITE"
-    const val DARK = "DARK"
     const val DEFAULT_FONT = 0
-    const val LENGTH_SHORT = 0
-    const val LENGTH_LONG = 1
-    const val YOFFSET = 250
+}
 
+enum class Mode{
+    LITE,
+    DARK
+}
+enum class Type{
+    SUCCESS,
+    ERROR,
+    WARNING,
+    INFO,
+    CUSTOM
+}
+
+enum class Length(val time : Int){
+    LENGTH_SHORT(0),
+    LENGTH_LONG(1)
 }
